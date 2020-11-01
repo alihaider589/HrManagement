@@ -1,0 +1,12 @@
+{
+  "name": "hrmanagement",
+  "displayName": "hrmanagement",
+  "expo": {
+    "name": "hrmanagement",
+    "slug": "hrmanagement",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
