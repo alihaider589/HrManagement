@@ -7,6 +7,7 @@ import Input from './common/Input'
 import Card from './common/Card'
 import CardSection from './common/CardSection'
 import Button from './common/Button'
+import firebase from 'firebase'
 
 
 class LoginForm extends Component {
@@ -17,10 +18,19 @@ class LoginForm extends Component {
         this.props.passwordChanged(text)
     }
     onLoginUser() {
-    const {email,password} = this.props
-        this.props.loginUser({ email, password})
-   
-
+        const { email, password } = this.props
+        this.props.loginUser({ email, password });
+    }
+    onError(){
+        if(this.props.error){
+            return (
+                <View>
+                <Text style={{fontSize:25,textAlign:"center",color:"red",fontWeight:'900',}}>
+                {this.props.error}
+                </Text>
+                </View>
+            )
+        }
     }
     render() {
         return (
@@ -45,11 +55,11 @@ class LoginForm extends Component {
 
                     />
                 </CardSection>
-
+{this.onError()}
                 <CardSection>
-                    <Button onPasswordChange={this.onLoginUser.bind(this)}>
-                        
-                    Login
+                    <Button onPress={this.onLoginUser.bind(this)}>
+
+                        Login
                 </Button>
                 </CardSection>
             </Card>
@@ -60,7 +70,8 @@ class LoginForm extends Component {
 const mapStateToProps = state => {
     return {
         email: state.auth.email,
-        password: state.auth.password
+        password: state.auth.password,
+        error:state.auth.error
     }
 }
 
