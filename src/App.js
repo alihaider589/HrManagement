@@ -5,6 +5,7 @@ import {Provider} from 'react-redux'
 import reducers from './reducers'
 import firebase from 'firebase'
 import LoginForm from './components/LoginForm'
+import Routes from './routes/routes'
 
 class App extends Component {
 
@@ -28,7 +29,7 @@ class App extends Component {
         const store =createStore(reducers,{},applyMiddleware(ReduxThunk))
         return (
         <Provider store={store}>
-        <LoginForm />
+        <Routes />
         </Provider>
         )
     }

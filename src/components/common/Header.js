@@ -3,22 +3,29 @@ import {
   View,
   Text,
   StyleSheet,
-  StatusBar
+  StatusBar,
+  TouchableOpacity
 } from 'react-native';
 
 const Header =(props)=>{
   return (
 <View style={styles.container}>
 
-    <Text style={{fontSize:20}}>{props.headerText}</Text>
+    <Text style={{fontSize:20,alignSelf:"center",marginLeft:'30%'}}>{props.headerText}</Text>
+    <TouchableOpacity onPress={props.onPress}>
+    <Text>{props.Righttext}</Text>
+    </TouchableOpacity> 
+  
 </View>
 )}
 
 const styles = StyleSheet.create({
   container: {
-
+flexDirection:'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
+    paddingHorizontal:10,
+    alignContent:'center',
     height:60,
     backgroundColor:'#f8f8f8',
     width:'100%',

@@ -7,10 +7,18 @@ import Input from './common/Input'
 import Card from './common/Card'
 import CardSection from './common/CardSection'
 import Button from './common/Button'
+import Spinner from './common/Spinner'
 import firebase from 'firebase'
+import Header from '../components/common/Header'
 
 
 class LoginForm extends Component {
+   
+    
+  
+    constructor(props){
+        super(props)
+    }
     onEmailChange(text) {
         this.props.emailChanged(text)
     }
@@ -18,60 +26,77 @@ class LoginForm extends Component {
         this.props.passwordChanged(text)
     }
     onLoginUser() {
-        const { email, password } = this.props
-        this.props.loginUser({ email, password });
+        const { email, password ,navigation} = this.props
+        this.props.loginUser({ email, password ,navigation});
     }
-    onError(){
-        if(this.props.error){
+    onRenderButton() {
+        if (this.props.loading) {
+            return( 
+            <View>
+            <Text style={{textAlign:'center'}}>Loading</Text>
+            </View>)
+        } else {
+            return (
+
+                <Button onPress={this.onLoginUser.bind(this)}>
+
+                    Login
+                </Button>
+            )
+        }
+    }
+    onError() {
+        if (this.props.error) {
             return (
                 <View>
-                <Text style={{fontSize:25,textAlign:"center",color:"red",fontWeight:'900',}}>
-                {this.props.error}
-                </Text>
+                    <Text style={{ fontSize: 25, textAlign: "center", color: "red", fontWeight: '900', }}>
+                        {this.props.error}
+                    </Text>
                 </View>
             )
         }
     }
     render() {
         return (
+            <View>
+            <Header headerText="Sign up or Register" Righttext="     "/>
             <Card>
-                <CardSection>
-                    <Input
-                        label="email"
-                        placeholder="ali@gmail.com"
-                        onChangeText={this.onEmailChange.bind(this)}
+            <CardSection>
+            <Input
+            label="email"
+            placeholder="ali@gmail.com"
+            onChangeText={this.onEmailChange.bind(this)}
                         value={this.props.email}
-
-                    />
-                </CardSection>
-
-                <CardSection>
-                    <Input
+                        
+                        />
+                        </CardSection>
+                        
+                        <CardSection>
+                        <Input
                         secureTextEntry
                         label="password"
                         placeholder="password"
                         onChangeText={this.onPasswordChange.bind(this)}
                         value={this.props.password}
-
-                    />
+                        
+                        />
                 </CardSection>
-{this.onError()}
+                {this.onError()}
                 <CardSection>
-                    <Button onPress={this.onLoginUser.bind(this)}>
-
-                        Login
-                </Button>
+                {this.onRenderButton()}
                 </CardSection>
-            </Card>
-        )
-    }
-}
-
-const mapStateToProps = state => {
-    return {
-        email: state.auth.email,
-        password: state.auth.password,
-        error:state.auth.error
+                </Card>
+                </View>
+                )
+            }
+        }
+        
+        const mapStateToProps = state => {
+            return {
+                email: state.auth.email,
+                password: state.auth.password,
+        error: state.auth.error,
+        loading: state.auth.loading
     }
 }
 
